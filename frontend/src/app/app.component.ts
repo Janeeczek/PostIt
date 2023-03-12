@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthService} from "./core/auth/auth.service";
 import {Router} from "@angular/router";
-import {ToastService} from "./core/toast/toast.service";
-import {LoadingIndicatorService} from "./core/loading-indicator/loading-indicator.service";
+
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,7 @@ import {LoadingIndicatorService} from "./core/loading-indicator/loading-indicato
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private authService: AuthService, private router: Router, private toastService: ToastService, private loadingIndicatorService: LoadingIndicatorService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.router.navigateByUrl('/');
   }
   isLoggedIn(){

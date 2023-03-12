@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs";
+import {map, tap} from "rxjs";
 import {HttpProviderService} from "../http/http-provider.service";
 import {JwtToken, AuthResponse} from "../http/response/response";
-import {ToastService} from "../toast/toast.service";
 import {Router} from "@angular/router";
+import {LoadingIndicatorService} from "../utill-components/loading-indicator/loading-indicator.service";
+import {ToastService} from "../utill-components/toast/toast.service";
 
 
 @Injectable({
@@ -11,22 +12,27 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
   constructor(private httpService: HttpProviderService, private toastService: ToastService, private router: Router,
+    private loadingIndicatorService: LoadingIndicatorService
   ) {
   }
 
   public authenticate(login: string, password: string) {
+    this.loadingIndicatorService.show();
     this.httpService.login({login, password})
       .pipe(
+        tap(()=> this.loadingIndicatorService.updateProgressValue(50)),
         map((jwtToken: JwtToken) => {
+          const tokenStr = "Bearer " + jwtToken.token;
           sessionStorage.setItem("login", login);
-          let tokenStr = "Bearer " + jwtToken.token;
           sessionStorage.setItem("token", tokenStr);
           sessionStorage.setItem("password", password);
           return jwtToken;
-        })
+        }),
+        tap(()=> this.loadingIndicatorService.updateProgressValue(100)),
       ).subscribe({
       next: () => this.onSuccessLogin(),
-      error: err => this.toastService.showDanger(err.error.message)
+      error: err => this.toastService.showDanger(err.error.message),
+      complete: () => this.loadingIndicatorService.hide()
     });
   }
 
@@ -40,10 +46,11 @@ export class AuthService {
   }
 
   public register(username: string, password: string) {
+    this.loadingIndicatorService.show();
     return this.httpService.register({username, password}).subscribe({
       next: () => this.onSuccessRegister(),
-      error: (err) => this.toastService.showDanger(err.error.message)
-
+      error: (err) => this.toastService.showDanger(err.error.message),
+      complete: () => this.loadingIndicatorService.hide()
     })
   }
 

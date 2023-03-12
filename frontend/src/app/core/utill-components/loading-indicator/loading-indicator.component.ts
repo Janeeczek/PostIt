@@ -16,4 +16,7 @@ export class LoadingIndicatorComponent implements OnInit {
     return this.loadingIndicatorService.showLoading;
   }
 
+  public progressValue() {
+    return this.loadingIndicatorService.progressValue;
+  }
 }
