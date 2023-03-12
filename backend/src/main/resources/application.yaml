@@ -1,0 +1,23 @@
+jwt:
+  secret: "#%34Rrdasf"
+spring:
+  sql:
+    init:
+      platform: postgres
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: postit
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+
+    password: J@nek112
+    username: jma
+    url: jdbc:postgresql://192.168.50.3:49153/postgres
+    driver-class-name: org.postgresql.Driver
+logging:
+  level:
+    root: info

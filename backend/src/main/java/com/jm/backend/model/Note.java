@@ -15,12 +15,13 @@ public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @JdbcTypeCode(SqlTypes.VARCHAR)
     private Long id;
 
-    @Column
-    private String username;
-    @Column
-    private String hashedPassword;
+    @Column(name = "text", length = 200)
+    private String text;
+
+    @ManyToOne(cascade = CascadeType.REMOVE, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 }
