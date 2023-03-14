@@ -17,6 +17,7 @@ export class HttpInterceptorService implements HttpInterceptor {
         }
       })
     }
+
     const xhr = req.clone({
       headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
     });

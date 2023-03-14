@@ -2,10 +2,17 @@
   <!-- Navbar -->
   <nav class="navbar navbar-dark bg-dark ">
     <div class="container-fluid">
-      <a class="navbar-brand" routerLinkActive="active" routerLink="/home">PostIt</a>
+
+      <div class="p-2 text-primary">
+        <a class="navbar-brand" routerLinkActive="active" routerLink="/home">PostIt</a>
+        <a class="btn btn-secondary text-center" (click)="addNote()">
+          Add Note
+        </a>
+      </div>
+
       <div class="row ">
         <div class="col " >
-          <span class="text-bg-dark text-info align-middle text text-center  " style="width:1px; white-space:nowrap;" *ngIf="isLoggedIn();" >User logged in:</span>
+          <span class="text-bg-dark text-info align-middle text text-center" style="width:1px; white-space:nowrap;" *ngIf="isLoggedIn();" >User logged in:</span>
         </div>
         <div class="col g-0" >
           <span class="text-bg-dark align-middle text" style="width:1px; white-space:nowrap;" *ngIf="isLoggedIn();" >{{getUserLogin()}}</span>

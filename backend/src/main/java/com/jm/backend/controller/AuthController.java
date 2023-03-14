@@ -28,7 +28,6 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthService authService;
 
-
     @PostMapping(value = "/authenticate")
     public JwtResponse createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)  {
         try {
@@ -37,8 +36,7 @@ public class AuthController {
             final String token = jwtTokenUtil.generateToken(userDetails);
             return new JwtResponse(token);
         }catch (BadCredentialsException exc) {
-            //TODO move to advice
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found", exc);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Bad credentials", exc);
         }
     }
     @PostMapping(value = "/register")
@@ -47,12 +45,11 @@ public class AuthController {
             userService.registerUser(user);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
-            //TODO move to advice
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Login in use", e);
         }
     }
     @PostMapping(value = "/user")
     public ResponseEntity<?> checkLoginStatus(Principal user) {
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user.getName(), HttpStatus.OK);
     }
 }

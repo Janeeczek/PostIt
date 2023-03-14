@@ -18,8 +18,12 @@ export class LoadingIndicatorService {
   public hide(){
     this._showLoading = false;
   }
-  public show(){
-    this.resetProgress();
+  public show(initValue?: number){
+    if(initValue!== undefined) {
+      this._progressValue = initValue;
+    } else {
+      this.resetProgress();
+    }
     this._showLoading = true;
   }
   private resetProgress() {

@@ -7,9 +7,11 @@ import com.jm.backend.service.AuthService;
 import com.jm.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -25,23 +27,27 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final boolean securityDebug = false;
     private final AuthService authService;
     private final UserService userService;
     private final ShaPasswordEncoder passwordEncoder;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtRequestFilter jwtRequestFilter;
-    private static final String[] CSRF_IGNORE = {"/api/v1/auth/authenticate","/api/v1/auth/register","/error",};
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -52,13 +58,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors()
                 .and()
-                .csrf() // csrf config starts here
-                .ignoringRequestMatchers(CSRF_IGNORE) // URI where CSRF check will not be applied
-                .csrfTokenRepository(csrfTokenRepository()) // defines a repository where tokens are stored
-                .and()
-                .addFilterAfter(new CustomCsrfFilter(), CsrfFilter.class)
+                .csrf()
+                .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/authenticate","/api/v1/auth/register","/error",  "/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico").permitAll()
+                .requestMatchers("/api/v1/auth/authenticate", "/api/v1/auth/register", "/error", "/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico").permitAll()
                 .and()
                 .authorizeHttpRequests()
                 .anyRequest().authenticated()
@@ -83,9 +86,22 @@ public class SecurityConfig {
                 .build();
     }
 
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName(CustomCsrfFilter.CSRF_COOKIE_NAME);
+    @Bean
+    public CsrfTokenRepository csrfTokenRepository() {
+        CookieCsrfTokenRepository repository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        repository.setCookiePath("/");
         return repository;
     }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
 }
