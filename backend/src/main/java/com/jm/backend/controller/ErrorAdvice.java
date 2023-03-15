@@ -15,6 +15,14 @@ import java.util.Map;
 @RestControllerAdvice
 public class ErrorAdvice {
     @ResponseBody
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> genericHandler(Exception ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("1", ex.getMessage());
+        return errors;
+    }
+    @ResponseBody
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> authHandler(AuthenticationException ex) {
@@ -35,4 +43,5 @@ public class ErrorAdvice {
         });
         return errors;
     }
+
 }

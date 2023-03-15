@@ -23,10 +23,6 @@ export class HttpProviderService {
     return this.http.post<JwtToken>(DEFAULT_API_AUTH + '/authenticate', request);
   }
 
-  public checkLogin() {
-    return this.http.get(DEFAULT_API_AUTH + '/user');
-  }
-
   public addNote(request: NoteRequest) {
     return this.http.post<string>(DEFAULT_API_NOTE + '/add', request);
   }

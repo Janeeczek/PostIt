@@ -26,16 +26,11 @@ public class AuthService implements AuthenticationProvider {
         var login = authentication.getName();
         var rawPassword = authentication.getCredentials().toString();
 
-        //check if user with given login exists in DB
         if (!userRepository.existsByUsername(login)) throw new BadCredentialsException("User does not exist");
-        //fetch user data
         var user = userRepository.findByUsername(login).get();
-        //check if account is not locked
         if (!user.isAccountNonLocked()) throw new DisabledException("Account is locked! You have to wait 3 minutes");
-        //if SHA512 then use SHA512 encoder
         if (!passwordEncoder.matchesWithSHA512(rawPassword, user.getSalt(), user.getPassword()))
             throw new BadCredentialsException("Wrong login or password");
-        //after all checks passed -> authenticate
         return new UsernamePasswordAuthenticationToken(login, rawPassword, Collections.emptyList());
     }
 
