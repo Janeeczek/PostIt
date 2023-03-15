@@ -7,15 +7,12 @@ import com.jm.backend.response.JwtResponse;
 import com.jm.backend.service.AuthService;
 import com.jm.backend.service.UserService;
 import com.jm.backend.util.JwtTokenUtil;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 
@@ -29,25 +26,21 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value = "/authenticate")
-    public JwtResponse createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)  {
-        try {
-            authService.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getLogin(), authenticationRequest.getPassword()));
-            final User userDetails = userService.loadUserByUsername(authenticationRequest.getLogin());
-            final String token = jwtTokenUtil.generateToken(userDetails);
-            return new JwtResponse(token);
-        }catch (BadCredentialsException exc) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Bad credentials", exc);
-        }
+    public JwtResponse createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
+        authService.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getLogin(), authenticationRequest.getPassword()));
+        final User userDetails = userService.loadUserByUsername(authenticationRequest.getLogin());
+        final String token = jwtTokenUtil.generateToken(userDetails);
+        return new JwtResponse(token);
     }
+
     @PostMapping(value = "/register")
-    public ResponseEntity<?> register(@RequestBody UserDto user) {
-        try {
-            userService.registerUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Login in use", e);
-        }
+    public ResponseEntity<?> register(@Valid @RequestBody UserDto user) {
+
+        userService.registerUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
+
     @PostMapping(value = "/user")
     public ResponseEntity<?> checkLoginStatus(Principal user) {
         return new ResponseEntity<>(user.getName(), HttpStatus.OK);

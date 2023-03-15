@@ -5,11 +5,8 @@ export interface Note {
   createdAt: Date;
 
 }
-export enum ModalType {
-  ADD,
-  EDIT
-}
-export enum ModalCloseReason{
+
+export enum ModalCloseReason {
   CLOSE,
   SUCCESS
 }

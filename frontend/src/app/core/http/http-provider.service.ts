@@ -22,6 +22,7 @@ export class HttpProviderService {
   public login(request: LoginRequest) {
     return this.http.post<JwtToken>(DEFAULT_API_AUTH + '/authenticate', request);
   }
+
   public checkLogin() {
     return this.http.get(DEFAULT_API_AUTH + '/user');
   }
@@ -37,6 +38,7 @@ export class HttpProviderService {
   public deleteNote(id: number) {
     return this.http.delete<string>(DEFAULT_API_NOTE + '/delete/' + id);
   }
+
   public allNotes(): Observable<Note[]> {
     return this.http.get<Note[]>(DEFAULT_API_NOTE + '/all');
   }

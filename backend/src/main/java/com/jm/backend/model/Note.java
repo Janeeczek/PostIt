@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -26,7 +23,7 @@ public class Note {
     @Column(name = "text", length = 200)
     private String text;
 
-    @ManyToOne( optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoadingIndicatorComponent } from './loading-indicator.component';
+import {LoadingIndicatorComponent} from './loading-indicator.component';
 
 describe('LoadingIndicatorComponent', () => {
   let component: LoadingIndicatorComponent;
@@ -8,9 +8,9 @@ describe('LoadingIndicatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadingIndicatorComponent ]
+      declarations: [LoadingIndicatorComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LoadingIndicatorComponent);
     component = fixture.componentInstance;

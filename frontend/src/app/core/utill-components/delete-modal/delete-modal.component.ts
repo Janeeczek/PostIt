@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ModalCloseReason} from "../../../Object";
 
@@ -9,14 +9,17 @@ import {ModalCloseReason} from "../../../Object";
 })
 export class DeleteModalComponent implements OnInit {
 
-  constructor(private activeModal: NgbActiveModal) { }
+  constructor(private activeModal: NgbActiveModal) {
+  }
 
   ngOnInit(): void {
   }
+
   public close() {
     this.activeModal.dismiss(ModalCloseReason.CLOSE);
 
   }
+
   public success() {
     this.activeModal.close();
   }

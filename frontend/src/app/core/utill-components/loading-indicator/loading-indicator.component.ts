@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoadingIndicatorService} from "./loading-indicator.service";
 
 @Component({
@@ -8,10 +8,12 @@ import {LoadingIndicatorService} from "./loading-indicator.service";
 })
 export class LoadingIndicatorComponent implements OnInit {
 
-  constructor(private loadingIndicatorService:LoadingIndicatorService) { }
+  constructor(private loadingIndicatorService: LoadingIndicatorService) {
+  }
 
   ngOnInit(): void {
   }
+
   public shouldShowLoading() {
     return this.loadingIndicatorService.showLoading;
   }

@@ -10,7 +10,9 @@ import {NoteService} from "./note.service";
 export class NoteComponent implements OnInit {
 
   @Input() data!: Note;
-  constructor(private noteService: NoteService) { }
+
+  constructor(private noteService: NoteService) {
+  }
 
   ngOnInit(): void {
 

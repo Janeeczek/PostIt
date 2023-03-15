@@ -2,12 +2,12 @@ package com.jm.backend.service;
 
 import com.jm.backend.dto.UserDto;
 import com.jm.backend.encoder.ShaPasswordEncoder;
+import com.jm.backend.exception.AuthException;
 import com.jm.backend.model.User;
 import com.jm.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,12 +20,14 @@ public class UserService implements UserDetailsService {
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not database"));
     }
-    public User registerUser(UserDto userDto) throws Exception {
-        if(userRepository.existsByUsername(userDto.getUsername())) {
-            throw new Exception();
+
+    public User registerUser(UserDto userDto) throws AuthException {
+        if (userRepository.existsByUsername(userDto.getUsername())) {
+            throw new AuthException("Username in use");
         }
         return save(userDto);
     }
+
     public User save(UserDto userDto) {
         User user = createUser(userDto);
         return userRepository.save(user);

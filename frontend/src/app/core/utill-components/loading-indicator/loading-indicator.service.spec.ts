@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { LoadingIndicatorService } from './loading-indicator.service';
+import {LoadingIndicatorService} from './loading-indicator.service';
 
 describe('LoadingIndicatorService', () => {
   let service: LoadingIndicatorService;

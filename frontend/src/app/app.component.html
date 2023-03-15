@@ -5,27 +5,30 @@
 
       <div class="p-2 text-primary">
         <a class="navbar-brand" routerLinkActive="active" routerLink="/home">PostIt</a>
-        <a class="btn btn-secondary text-center" (click)="addNote()">
+        <a class="btn btn-secondary text-center" *ngIf="isLoggedIn();" (click)="addNote()">
           Add Note
         </a>
       </div>
 
       <div class="row ">
-        <div class="col " >
-          <span class="text-bg-dark text-info align-middle text text-center" style="width:1px; white-space:nowrap;" *ngIf="isLoggedIn();" >User logged in:</span>
+        <div class="col ">
+          <span class="text-bg-dark text-info align-middle text text-center" *ngIf="isLoggedIn();">Active:</span>
         </div>
-        <div class="col g-0" >
-          <span class="text-bg-dark align-middle text" style="width:1px; white-space:nowrap;" *ngIf="isLoggedIn();" >{{getUserLogin()}}</span>
+        <div class="col g-0">
+          <span class="text-bg-dark align-middle text" *ngIf="isLoggedIn();">{{getUserLogin()}}</span>
         </div>
       </div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+              aria-controls="offcanvasDarkNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+           aria-labelledby="offcanvasDarkNavbarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">PostIt application</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                  aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">

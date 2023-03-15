@@ -8,9 +8,10 @@ import {ToastService} from "./toast.service";
 })
 export class ToastContainerComponent implements OnInit {
 
-  constructor(public toastService: ToastService) {}
+  constructor(public toastService: ToastService) {
+  }
 
-  isTemplate(toast:any) {
+  isTemplate(toast: any) {
     return toast.textOrTpl instanceof TemplateRef;
   }
 

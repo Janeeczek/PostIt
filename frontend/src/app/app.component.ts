@@ -9,11 +9,12 @@ import {NoteService} from "./view-objects/note/note.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private noteService: NoteService) {
   }
+
   ngOnInit(): void {
-    if(this.isLoggedIn()) {
+    if (this.isLoggedIn()) {
       this.router.navigateByUrl('/');
     } else {
       this.router.navigateByUrl('/login');
@@ -21,15 +22,19 @@ export class AppComponent implements OnInit{
 
 
   }
-  isLoggedIn(){
+
+  isLoggedIn() {
     return this.authService.isUserLoggedIn();
   }
-  getUserLogin(){
+
+  getUserLogin() {
     return this.authService.getUserLogin();
   }
+
   logout() {
     this.authService.logout();
   }
+
   addNote() {
     this.noteService.startAddNote();
   }

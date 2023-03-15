@@ -14,31 +14,34 @@ import java.security.SecureRandom;
 @Component
 public class ShaPasswordEncoder implements PasswordEncoder {
     private final String PEPPER = "3@#5#3d%sa%f2";
+
     @Override
     public String encode(CharSequence rawPassword) {
-        return BCrypt.hashpw(rawPassword.toString(),BCrypt.gensalt(8));
+        return BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt(8));
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        return BCrypt.checkpw(rawPassword.toString(),encodedPassword);
+        return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
     }
 
-    public String encodeWithSHA512(CharSequence rawPassword, String salt){
+    public String encodeWithSHA512(CharSequence rawPassword, String salt) {
         return calculateSHA512(PEPPER + rawPassword + salt);
     }
-    public boolean matchesWithSHA512(String rawPassword, String salt, String encodedPassword){
+
+    public boolean matchesWithSHA512(String rawPassword, String salt, String encodedPassword) {
         return calculateSHA512(PEPPER + rawPassword + salt).equals(encodedPassword);
     }
+
     public String generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[10];
         random.nextBytes(salt);
         return Base64.encodeBase64String(salt);
     }
+
     @SneakyThrows
-    public static String calculateSHA512(String text)
-    {
+    public static String calculateSHA512(String text) {
         try {
             //get an instance of SHA-512
             MessageDigest md = MessageDigest.getInstance("SHA-512");

@@ -1,4 +1,6 @@
 .absolute {
-  position: absolute; top: -10%; left: 40%;
+  position: absolute;
+  left: 10%;
+  bottom: 100%;
 }
 

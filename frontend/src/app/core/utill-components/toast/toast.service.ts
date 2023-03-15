@@ -8,7 +8,7 @@ export class ToastService {
   toasts: any[] = [];
 
   show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
-    this.toasts.push({ textOrTpl, ...options });
+    this.toasts.push({textOrTpl, ...options});
   }
 
   remove(toast: any) {
@@ -18,15 +18,16 @@ export class ToastService {
   clear() {
     this.toasts.splice(0, this.toasts.length);
   }
+
   showStandard(text: string) {
     this.show(text);
   }
 
   showSuccess(text: string) {
-    this.show(text, { classname: 'bg-success text-light', delay: 5000 });
+    this.show(text, {classname: 'bg-success text-light', delay: 5000});
   }
 
   showDanger(text: string) {
-    this.show(text, { classname: 'bg-danger text-light', delay: 5000 });
+    this.show(text, {classname: 'bg-danger text-light', delay: 5000});
   }
 }

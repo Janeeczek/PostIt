@@ -2,10 +2,12 @@ export interface RegisterRequest {
   username: string;
   password: string;
 }
+
 export interface LoginRequest {
   login: string;
   password: string;
 }
+
 export interface NoteRequest {
   id?: number;
   userId?: number;
@@ -13,6 +15,7 @@ export interface NoteRequest {
   content?: string;
   createdAt?: Date;
 }
+
 export interface NoteRequest {
   title?: string;
   content?: string;

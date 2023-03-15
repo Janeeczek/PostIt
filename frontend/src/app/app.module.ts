@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {NgbActiveModal, NgbModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
 import {AuthService} from "./core/auth/auth.service";
 import {HttpInterceptorService} from "./core/http/http-interceptor.service";
@@ -14,11 +14,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./views/register/register.component";
 import {LoginComponent} from "./views/login/login.component";
 import {HomeComponent} from "./views/home/home.component";
-import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons';
-import { allIcons } from 'ngx-bootstrap-icons';
-import { NoteModalComponent } from './core/utill-components/note-modal/note-modal.component';
+import {allIcons, NgxBootstrapIconsModule} from 'ngx-bootstrap-icons';
+import {NoteModalComponent} from './core/utill-components/note-modal/note-modal.component';
 import {NoteService} from "./view-objects/note/note.service";
-import { DeleteModalComponent } from './core/utill-components/delete-modal/delete-modal.component';
+import {DeleteModalComponent} from './core/utill-components/delete-modal/delete-modal.component';
 
 
 const routes: Routes = [

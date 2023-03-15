@@ -4,16 +4,13 @@ import com.jm.backend.dto.NoteDto;
 import com.jm.backend.model.Note;
 import com.jm.backend.model.User;
 import com.jm.backend.service.NoteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,39 +19,43 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoteController {
     private final NoteService noteService;
+
     @PostMapping("/add")
-    public ResponseEntity<Note> addNote(@RequestBody NoteDto noteDto, Authentication  authentication) {
+    public ResponseEntity<Note> addNote(@Valid @RequestBody NoteDto noteDto, Authentication authentication) {
         try {
             noteService.addNote(noteDto, (User) authentication.getPrincipal());
-        return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Note> editNote(@RequestBody NoteDto noteDto, Authentication  authentication, @PathVariable() Long id) {
+    public ResponseEntity<Note> editNote(@Valid @RequestBody NoteDto noteDto, Authentication authentication, @PathVariable() Long id) {
         try {
             noteService.editNote(noteDto, id, (User) authentication.getPrincipal());
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Note> deleteNote( Authentication  authentication, @PathVariable() Long id) {
+    public ResponseEntity<Note> deleteNote(Authentication authentication, @PathVariable() Long id) {
         try {
             noteService.deleteNote(id, (User) authentication.getPrincipal());
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<Note>> allNotes(Authentication authentication) {
         try {
             var allNotes = noteService.allNotes((User) authentication.getPrincipal());
             return new ResponseEntity<>(allNotes, HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

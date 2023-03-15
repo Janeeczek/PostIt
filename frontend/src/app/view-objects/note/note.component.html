@@ -1,13 +1,15 @@
 <div class="card bg-warning size">
   <div class="card-header">
-    {{data.createdAt | date:'fullDate'}}
+    {{data.createdAt | date:'EEE dd.MM.yyyy hh:mm:ss'}}
   </div>
-  <div class="card-body">
+  <div class="card-body d-flex flex-column justify-content-between">
     <h5 class="card-title">{{data.title}}</h5>
     <p class="card-text">{{data.text}}</p>
     <div class="d-flex justify-content-end align-items-end">
-      <div class="p-2"><a class="btn btn-secondary text-center" i-bs name="pencil-fill" (click)="onEdit()">Edit</a></div>
-      <div class="p-2"><a class="btn btn-secondary text-center" i-bs name="trash-fill" (click)="onDelete()">Delete</a></div>
+      <div class="p-2"><a class="btn btn-secondary text-center" i-bs name="pencil-fill" (click)="onEdit()">Edit</a>
+      </div>
+      <div class="p-2"><a class="btn btn-secondary text-center" i-bs name="trash-fill" (click)="onDelete()">Delete</a>
+      </div>
     </div>
   </div>
 </div>

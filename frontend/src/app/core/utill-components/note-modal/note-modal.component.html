@@ -1,18 +1,33 @@
 <div class="modal-header">
-  <h4 class="modal-title">Adding new note</h4>
+  <h4 class="modal-title">{{modalHeader}} note</h4>
 </div>
-<div class="modal-body">
-  <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Title</label>
-    <input [(ngModel)]="title" required type="email" class="form-control" id="exampleFormControlInput1" placeholder="Short text representing title of new note">
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Content</label>
-    <textarea [(ngModel)]="content" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write your note here"></textarea>
-  </div>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-primary" (click)="success()">Add</button>
+<form [formGroup]="form" novalidate>
 
-  <button type="button" class="btn btn-outline-dark" (click)="close()">Close</button>
-</div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input id="title" name="title" formControlName="title" required type="text" class="form-control"
+             placeholder="Short text representing title of new note">
+    </div>
+    <div *ngIf="form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)"
+         class="alert alert-danger">
+      Title is required and must be at most 100 characters long.
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">Content</label>
+      <textarea name="content" formControlName="content" class="form-control" id="content" rows="3"
+                placeholder="Write your note here"></textarea>
+    </div>
+    <div
+      *ngIf="form.controls['content'].invalid && (form.controls['content'].dirty || form.controls['content'].touched)"
+      class="alert alert-danger">
+      Content must be at most 200 characters long.
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="success()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="close()">Close</button>
+  </div>
+</form>
+
